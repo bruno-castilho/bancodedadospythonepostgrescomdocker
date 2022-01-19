@@ -1,0 +1,21 @@
+version: "3"
+services: 
+  db: #Host
+    image: postgres:13
+    environment:
+      POSTGRES_USER: "postgres" 
+      POSTGRES_PASSWORD: "123456789" 
+      POSTGRES_DB: "postgres" 
+    restart: always
+    volumes:
+        - data:/var/lib/postgresql/data 
+    ports: 
+        - 5435:5432 #Porta 5432 compartilhada com sua máquina local na porta 5435.
+  python:
+    build: .
+    volumes:
+      - ./app:/app
+    depends_on: 
+      - db
+volumes:
+  data:
